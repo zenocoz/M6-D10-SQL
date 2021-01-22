@@ -17,7 +17,7 @@ server.use("/reviews", reviewsRoutes)
 server.use("/users", usersRoutes)
 
 //LISTEN
-db.sequelize.sync({ force: true }).then((result) => {
+db.sequelize.sync({ force: false }).then((result) => {
   const port = process.env.PORT || 3006
   server.listen(port, () => console.log("server created on port", port))
 })
