@@ -17,16 +17,15 @@ module.exports = (sequelize, DataTypes) => {
     { timestamps: true }
   )
 
-  // Product.associate = (models) => {
-  //   Product.hasMany(models.Review)
-  //   Product.hasMany(models.Story)
-  //   Product.belongsTo(models.Category)
-  //   Product.belongsToMany(models.Author, {
-  //     through: { model: models.Story },
-  //     unique: false,
-  //     timestamps: false,
-  //   })
-  // }
+  Product.associate = (models) => {
+    Product.hasMany(models.Review)
+    Product.hasMany(models.Cart)
+    Product.belongsToMany(models.User, {
+      through: { model: models.Cart },
+      unique: false,
+      timestamps: false,
+    })
+  }
 
   return Product
 }
