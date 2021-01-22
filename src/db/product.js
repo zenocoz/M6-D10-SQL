@@ -21,9 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     Product.hasMany(models.Review)
     Product.hasMany(models.Cart)
     Product.belongsToMany(models.User, {
-      through: { model: models.Cart },
-      unique: false,
-      timestamps: false,
+      through: { model: models.Cart, unique: false, timestamps: false },
     })
   }
 
