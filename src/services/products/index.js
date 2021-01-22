@@ -9,8 +9,8 @@ router
   .get(async (req, res, next) => {
     try {
       const data = await Product.findAll({
-        where: req.query.name
-          ? { name: { [Op.iLike]: "%" + req.query.name + "%" } }
+        where: req.query.category
+          ? { name: { [Op.iLike]: "%" + req.query.category + "%" } }
           : {},
         offset: parseInt(req.query.offset) | 0,
         limit: parseInt(req.query.limit) | 10,
@@ -69,5 +69,7 @@ router
       next(err)
     }
   })
+
+router.route("/:productId/upload").post(async (req, res, next) => {})
 
 module.exports = router

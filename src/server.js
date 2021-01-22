@@ -11,10 +11,12 @@ server.use(express.json())
 const productsRoutes = require("./services/products")
 const reviewsRoutes = require("./services/reviews")
 const usersRoutes = require("./services/users")
+const cartsRoutes = require("./services/carts")
 
 server.use("/products", productsRoutes)
 server.use("/reviews", reviewsRoutes)
 server.use("/users", usersRoutes)
+server.use("/carts", cartsRoutes)
 
 //LISTEN
 db.sequelize.sync({ force: false }).then((result) => {
