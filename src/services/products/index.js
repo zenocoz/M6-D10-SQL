@@ -1,8 +1,21 @@
 const express = require("express")
 const Product = require("../../db").Product
 const { Op } = require("sequelize")
+const sequelize = require("sequelize")
+const multer = require("multer")
+const cloudinary = require("../cloudinary")
+const { CloudinaryStorage } = require("multer-storage-cloudinary")
 
 const router = express.Router()
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "amazonSQL",
+  },
+})
+
+const cloudinaryMulter = multer({ storage: storage })
 
 router
   .route("/")
@@ -70,6 +83,17 @@ router
     }
   })
 
-router.route("/:productId/upload").post(async (req, res, next) => {})
+router
+  .route("/:productId/upload")
+  .post(cloudinaryMulter.single("image"), async (req, res, next) => {
+    try {
+      const product = await Product.findByPk(req.params.productId)
+      console.log(product.imageurl)
+      product.imageurl = req.file.path
+      await product.save()
+
+      res.send(product)
+    } catch (err) {}
+  })
 
 module.exports = router
